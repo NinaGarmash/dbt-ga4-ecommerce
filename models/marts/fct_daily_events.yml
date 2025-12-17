@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: fct_daily_events
+    description: "Daily count of GA4 ecommerce events by event type"
+    columns:
+      - name: event_day
+        tests:
+          - not_null
+
+      - name: event_name
+        tests:
+          - not_null
+
+      - name: event_count
+        tests:
+          - not_null
+
