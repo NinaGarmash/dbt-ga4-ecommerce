@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: fct_daily_revenue_aov
+    columns:
+      - name: order_date
+        tests: [not_null]
+      - name: daily_revenue
+        tests: [not_null]
+      - name: orders
+        tests: [not_null]

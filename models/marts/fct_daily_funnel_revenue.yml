@@ -1,0 +1,59 @@
+version: 2
+
+models:
+  - name: fct_daily_funnel_revenue
+    description: "Daily mart combining funnel counts (sessions and steps) with ecommerce revenue metrics."
+    columns:
+      - name: event_date
+        tests:
+          - not_null
+          - unique
+
+      - name: sessions
+        tests:
+          - not_null
+
+      - name: sessions_purchase
+        tests:
+          - not_null
+
+      - name: orders
+        tests:
+          - not_null
+
+      - name: revenue
+        tests:
+          - not_null
+
+      - name: session_conversion_rate
+        tests:
+          - not_null
+
+      - name: revenue_per_session
+        tests:
+          - not_null
+
+    tests:
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: "sessions >= 0"
+
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: "sessions_purchase <= sessions"
+
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: "session_conversion_rate between 0 and 1"
+
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: "revenue >= 0"
+
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: "orders >= 0"
+
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: "revenue_per_session >= 0"

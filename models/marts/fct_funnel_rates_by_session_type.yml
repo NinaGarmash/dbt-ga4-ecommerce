@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: fct_funnel_rates_by_session_type
+    description: "Funnel conversion metrics split by session type (new vs returning)"
+    columns:
+      - name: is_new_session
+        tests:
+          - not_null
+
+      - name: sessions_total
+        tests:
+          - not_null
+
+      - name: session_purchase_rate
+        tests:
+          - not_null
+
+    tests:
+      - dbt_utils.expression_is_true:
+          expression: "session_purchase_rate between 0 and 1"

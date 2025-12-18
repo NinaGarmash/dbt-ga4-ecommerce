@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: fct_daily_revenue
+    description: "Daily revenue, order count, and average order value (AOV) from valid GA4 orders."
+    columns:
+      - name: order_date
+        tests:
+          - not_null
+
+      - name: currency
+        tests:
+          - not_null
+
+      - name: orders
+        tests:
+          - not_null
+
+      - name: revenue
+        tests:
+          - not_null
+
+      - name: aov
+        tests:
+          - not_null
+
+    tests:
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: "orders >= 0"
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: "revenue >= 0"
+      - dbt_utils.expression_is_true:
+          arguments:
+            expression: "aov >= 0"
